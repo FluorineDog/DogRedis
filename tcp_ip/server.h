@@ -1,6 +1,6 @@
 #ifndef DOG_SERVER_H
 #define DOG_SERVER_H
-#include "c_headers.h"
+#include "common.h"
 /*
 struct sockaddr
 {
@@ -20,5 +20,9 @@ struct in_addr
 };
 */
 void HandleConnection(int connect_fd);
-int CreateListenFg(unsigned short port);
+int CreateListenfd(unsigned short port);
+
+
+bool enableLock();
+bool unlock();
 #endif 	//DOG_SERVER_H
