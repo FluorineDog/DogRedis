@@ -1,4 +1,4 @@
-#incldue "server.h"
+#include "server.h"
 /* vim:set ts=4 sw=4 noai sr sta et cin:
 * simpleserver.c
 * by Keith Gaughan <kmgaughan@eircom.net>
