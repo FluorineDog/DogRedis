@@ -18,5 +18,5 @@ int main(){
 	sercaddr.sin_addr.s_addr = htonl(INADDR_ANY);
 	sercaddr.sin_port = htonl(port);
 	// bind
-	bind(lisFg, )
+	bind(lisFg,() )
 }
