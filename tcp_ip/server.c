@@ -17,7 +17,7 @@ int CreateTCPServerSocket(unsigned short port, int nQueued);
 void DispatchIncoming(int fdQueue); // From earlier in the notes.
 void HandleConnection(int fd);
 int ReadString(int fd, char* buf, int n); // From client.c
-void main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
 	int port;
 	int fdQueue;
@@ -37,6 +37,7 @@ void main(int argc, char* argv[])
 		exit(EXIT_FAILURE);
 	// Enter connection dispatch loop.
 	DispatchIncoming(fdQueue);
+	return 0;
 }
 /**
 * Opens a socket for the server to listen for connections on.
@@ -90,7 +91,8 @@ void HandleConnection(int fd)
 	// so write that out.
 	sprintf(buf, "%d", nRead);
 	// Send the data back to the client.
-	write(fd, buf, strlen(buf));
+	printf("serverbuf: %s\n",buf);
+	write(fd, buf, strlen(buf)+1);
 	// Clean up!
 	close(fd);
 }
@@ -108,7 +110,7 @@ int ReadString(int fd, char* buf, int n)
 			return -1;
 		}
 		// Have we reached the end?
-		if (*buf == ’\0’)
+		if (*buf == '\0')
 		break;
 		// Record amount read and move buffer on.
 		nTtlRead += 1;

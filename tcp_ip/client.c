@@ -2,7 +2,7 @@
 // Sample wrapper from the notes -- connects to a given server.
 int ConnectToServer(char* hostname, unsigned short port);
 
-void main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
 	int fd;
 	unsigned short port;
@@ -27,17 +27,22 @@ void main(int argc, char* argv[])
 	}
 	// Get some input from the user.
 	printf("> ");
-	fgets(stdin, buf, sizeof(buf) - 1);
+	fgets(buf, sizeof(buf) - 1,stdin);
 	// Send everything in the buffer to the server.
+	printf("Dog 1 is opening \n%s\n",buf);
+	
 	write(fd, buf, sizeof(buf));
 	// Read the response from the server.
+	
 	nRead = ReadString(fd, buf, sizeof buf);
+	
 	if (nRead > 0)
 		printf("Length of string is: %s\n", buf);
 	else
 		perror("Something went wrong talking to server!");
 	// Clean up and exit.
 	close(fd);
+	return 0;
 }
 /**
 * Reads data from the file descriptor until it reaches a NUL.
@@ -54,18 +59,60 @@ int ReadString(int fd, char* buf, int n)
 	int nRead = 0;
 	while (nTtlRead < n)
 	{
+		printf("Count %d\n", nTtlRead);
 		// Read a character at a time, and check for error...
 		if (read(fd, buf, 1) < 0)
 		{
 			perror("Error reading!");
-			return -1;
+			break;
 		}
 		// Have we reached the end?
-		if (*buf == ’\0’)
-		break;
+		printf("ascii value %d \n ",(int)*buf);
+		if (*buf == '\0')
+			break;
 		// Record amount read and move buffer on.
 		nTtlRead += 1;
 		buf += 1;
 	}
 	return nTtlRead;
+}
+/**
+* Creates a socket and connects to the specified server.
+*
+* @param hostname Host server is running on.
+* @param port Port server is bound to.
+*
+* @return File descriptor for connected socket, or -1 if failed.
+*/
+int ConnectToServer(char* hostname, unsigned short port)
+{
+	int fd;
+	struct hostent* info;
+	struct sockaddr_in addr;
+	// Get the server’s details.
+	info = gethostbyname(hostname);
+	if (info == NULL)
+	{
+		perror("Host not found.");
+		return -1;
+	}
+	// Get the server’s address.
+	addr.sin_family = info->h_addrtype;
+	addr.sin_port = htons(port);
+	memcpy((void*) &addr.sin_addr, info->h_addr, info->h_length);
+	// Create a socket.
+	fd = socket(AF_INET, SOCK_STREAM, 0);
+	if (fd == -1)
+	{
+		perror("Could not open socket.");
+		return -1;
+	}
+	// Try to establish connection to server.
+	if (connect(fd, (struct sockaddr*) &addr, sizeof(addr)) == -1)
+	{
+		perror("Could not connect to server.");
+		close(fd);
+		return -1;
+	}
+	return fd;
 }
