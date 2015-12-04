@@ -19,6 +19,6 @@ struct in_addr
 	unsigned long s_addr; // IP address.
 };
 */
-
-
+void HandleConnection(int connect_fd);
+int CreateListenFg(unsigned short port);
 #endif 	//DOG_SERVER_H
