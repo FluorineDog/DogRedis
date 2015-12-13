@@ -1,3 +1,6 @@
+#ifndef DOG_LAZY_TCP_H_
+#define DOG_LAZY_TCP_H_
+#include "unp.h"
 int ConnectToServer(char* hostname, unsigned short port)
 {
 	int fd;
@@ -26,4 +29,5 @@ int ConnectToServer(char* hostname, unsigned short port)
 		err_quit("Could not connect to server.");
 	}
 	return fd;
-}
+
+#endif //DOG_LAZY_TCP_H_

@@ -1,4 +1,5 @@
 #include "unp.h"
+#include "lazy_tcp.h"
 int ConnectToServer(char* hostname, unsigned short port)
 {
 	int fd;
