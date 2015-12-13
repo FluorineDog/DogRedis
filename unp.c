@@ -1,3 +1,4 @@
+// COPYRIGHT @ AAA20090987 CSDN
 #include "my_unp.h"  
 
 //此函数是在程序发生错误时被调用  

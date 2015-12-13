@@ -44,7 +44,7 @@ void str_cli(FILE *fp, int sockfd){
 			}
 			Fputs(recvline,stdout);// print connect infomation
 		}
-		if(FD_ISSET(fileno(fp),&rset)){
+		if(FD_ISSET(fileno(fp),&rset)){	//wait for input
 			if(FD_ISSET(fileno(fp),&rset)){
 				return;
 			}
