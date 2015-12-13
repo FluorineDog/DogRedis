@@ -1,6 +1,15 @@
 #ifndef DOG_LAZY_TCP_H_
 #define DOG_LAZY_TCP_H_
-#include "unp.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <assert.h>
+#include <syslog.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
 int ConnectToServer(char* hostname, unsigned short port)
 {
 	int fd;
