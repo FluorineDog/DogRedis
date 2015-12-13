@@ -9,7 +9,10 @@ int SetUp(unsigned short port){
 	Bind(listenfd, (SA*)&servaddr, sizeof(servaddr));
 	Listen(listenfd,LISTENQ);
 }
-
+int exec(char* input_buf, char*  output_buf){
+	snprintf(output_buf,MAXLINE,"%s", input_buf);
+	return -1;
+}
 int main(int argc,char *argv[]){
 	int listenfd, connfd, maxfd;
 	char input_buf[MAXLINE];
@@ -63,7 +66,7 @@ int main(int argc,char *argv[]){
 		// deal with all cilent
 		for(int i = 0; i< maxi; ++i){
 			int sockfd = client[i];
-			if(sockfd<0)continue;
+			if(sockfd < 0)continue;
 			if(FD_ISSET(sockfd, &rset)){
 				int nStr = Read(sockfd, input_buf, MAXLINE);
 				if(nstr == 0){			// connection closed by client
@@ -72,8 +75,11 @@ int main(int argc,char *argv[]){
 					client[i] = -1;
 				}
 				else{
-					exec(output_buf, input_buf);
-					fprintf
+					status = exec(output_buf, input_buf);
+					if(fprintf(output_buf));
+				}
+				if(--nready<=0){
+					break;
 				}
 			}
 		}
