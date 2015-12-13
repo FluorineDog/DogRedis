@@ -56,7 +56,7 @@ int main(int argc, char** argv){
 	int i,sockfd[5];
 	struct sockaddr_in servaddr;
 	if(argc != 3){
-		err_quit("usage: redis_cli <hostname> <port>");
+		err_quit("usage: %s <hostname> <port>", argv[0]);
 	}
 	int fd = ConnectToServer(argv[1],(unsigned short)atoi(argv[2]);
 	str_cli(stdin, fd);
