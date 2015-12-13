@@ -22,16 +22,21 @@ int ConnectToServer(char* hostname, unsigned short port)
 	{
 		error_quit("Host not found.");
 	}
+	fprintf(stderr, "999999\n");
 	// Get the server’s address.
 	addr.sin_family = info->h_addrtype;
 	addr.sin_port = htons(port);
 	memcpy((void*) &addr.sin_addr, info->h_addr_list[0], info->h_length);
 	// Create a socket.
+	
+	fprintf(stderr, "7777777\n");
 	fd = socket(AF_INET, SOCK_STREAM, 0);
+	fprintf(stdout, "88888888\n");
 	if (fd == -1)
 	{
 		error_quit("Could not open socket.");
 	}
+	fprintf(stderr, "44xxx444444\n");
 	// Try to establish connection to server.
 	if (connect(fd, (struct sockaddr*) &addr, sizeof(addr)) == -1)
 	{

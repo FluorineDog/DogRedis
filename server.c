@@ -8,6 +8,7 @@ int SetUp(unsigned short port){
 	servaddr.sin_port = htons(port);
 	Bind(listenfd, (SA*)&servaddr, sizeof(servaddr));
 	Listen(listenfd,LISTENQ);
+	printf("set up server. Port %d",(int)port);
 	return listenfd;
 }
 int exec(char* input_buf, char*  output_buf){
@@ -38,11 +39,11 @@ int main(int argc,char *argv[]){
 	for(;;){
 		// round begin : set up if new client request connection
 		rset = allset;	// 
-		fprintf(stdout, "sssxcxss\n");
+		fprintf(stdout, "1111111\n");
 		int nready = Select(maxfd + 1, &rset, NULL,NULL,NULL);
-		fprintf(stdout, "sssss\n");
+		fprintf(stdout, "222222\n");
 		if(FD_ISSET(listenfd, &rset)){	// new client connection
-			fprintf(stdout, "HELppxxLO\n");
+			fprintf(stdout, "3333333\n");
 			struct sockaddr_in cliaddr;
 			socklen_t clilen = sizeof(cliaddr);
 			int connfd = Accept(listenfd, (SA*)&cliaddr, &clilen);
@@ -64,13 +65,13 @@ int main(int argc,char *argv[]){
 			if(--nready<=0)				// exclude listenfd and check
 				continue;				// no client
 		}
-		system("sleep");
-		fprintf(stdout, "HELppLO\n");
+		getchar();
+		fprintf(stdout, "44444444\n");
 		// second half of the round
 		// deal with all cilent
 		for(int i = 0; i< maxi; ++i){
 			int sockfd = client[i];
-			fprintf(stdout, "HEssLLO\n");
+			fprintf(stdout, "5555555555\n");
 			if(sockfd < 0)continue;
 			
 			if(FD_ISSET(sockfd, &rset)){
@@ -89,10 +90,5 @@ int main(int argc,char *argv[]){
 				}
 			}
 		}
-
-		
 	}
-	
-	
-	
 }

@@ -24,22 +24,25 @@ void str_cli(FILE *fp, int sockfd){
 	// 		Writen(sockfd,sendline,strlen(sendline));
 	// 	}
 	// }
+	printf("heehe")
+	int n = (int)fgets(sendline,MAXLINE,stdin);
 	
-	while(fgets(sendline,MAXLINE,fp)!=NULL){
-		printf("aaaaa\n%s",sendline);
+	while(n!=NULL){
+		snprintf(stdout,MAXLINE,"what happened %d\n%s\n",n,sendline);
 		Writen(sockfd,sendline,strlen(sendline));
 		if(Readline(sockfd,recvline,MAXLINE)==0)
 			error_quit("server termnated prematurely");
 		Fputs(recvline, stdout);
+		n = (int)fgets(sendline,MAXLINE,fp);
 	}
 }
 int main(int argc, char** argv){
-	int i,sockfd[5];
-	struct sockaddr_in servaddr;
+
 	if(argc != 3){
 		error_quit("usage: %s <hostname> <port>", argv[0]);
 	}
-	int fd = ConnectToServer(argv[1],(unsigned short)atoi(argv[2]));
-	str_cli(stdin, fd);
+	printf("7777777\n");
+	//int sockfd = ConnectToServer(argv[1],(unsigned short)atoi(argv[2]));
+	//str_cli(stdin, sockfd);
 	exit(0);
 }
