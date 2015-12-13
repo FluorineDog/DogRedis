@@ -35,12 +35,14 @@ int main(int argc,char *argv[]){
 	}
 	FD_ZERO(&allset);
 	FD_SET(listenfd,&allset);	// add listenfd to allset
-	
 	for(;;){
 		// round begin : set up if new client request connection
 		rset = allset;	// 
+		fprintf(stdout, "sssxcxss\n");
 		int nready = Select(maxfd + 1, &rset, NULL,NULL,NULL);
+		fprintf(stdout, "sssss\n");
 		if(FD_ISSET(listenfd, &rset)){	// new client connection
+			fprintf(stdout, "HELppxxLO\n");
 			struct sockaddr_in cliaddr;
 			socklen_t clilen = sizeof(cliaddr);
 			int connfd = Accept(listenfd, (SA*)&cliaddr, &clilen);
@@ -62,11 +64,15 @@ int main(int argc,char *argv[]){
 			if(--nready<=0)				// exclude listenfd and check
 				continue;				// no client
 		}
+		system("sleep");
+		fprintf(stdout, "HELppLO\n");
 		// second half of the round
 		// deal with all cilent
 		for(int i = 0; i< maxi; ++i){
 			int sockfd = client[i];
+			fprintf(stdout, "HEssLLO\n");
 			if(sockfd < 0)continue;
+			
 			if(FD_ISSET(sockfd, &rset)){
 				int nStr = Read(sockfd, input_buf, MAXLINE);
 				if(nStr == 0){			// connection closed by client
@@ -83,6 +89,7 @@ int main(int argc,char *argv[]){
 				}
 			}
 		}
+
 		
 	}
 	

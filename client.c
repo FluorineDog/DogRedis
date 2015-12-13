@@ -1,27 +1,36 @@
 #include "unp.h"
 #include "lazy_tcp.h"
 void str_cli(FILE *fp, int sockfd){
-	int 	maxfdp1;
-	fd_set 	rset;
+	//int 	maxfdp1;
+	//fd_set 	rset;
 	char	sendline[MAXLINE], recvline[MAXLINE];//serve as buf
-	FD_ZERO(&rset);
-	for(;;){
-		FD_SET(fileno(fp),&rset);
-		FD_SET(sockfd, &rset);
-		maxfdp1=max(fileno(fp),sockfd)+1;
-		Select(maxfdp1,&rset,NULL,NULL,NULL);
-		if(FD_ISSET(sockfd,&rset)){
-			if(Readline(sockfd,recvline,MAXLINE) == 0){
-				error_quit("str_cli: server terminated prematurely");		
-			}
-			Fputs(recvline,stdout);// print connect infomation
-		}
-		if(FD_ISSET(fileno(fp),&rset)){	//wait for input
-			if(FD_ISSET(fileno(fp),&rset)){
-				return;
-			}
-			Writen(sockfd,sendline,strlen(sendline));
-		}
+	// FD_ZERO(&rset);
+	// for(;;){
+	// 	FD_SET(fileno(fp),&rset);
+	// 	FD_SET(sockfd, &rset);
+	// 	maxfdp1=max(fileno(fp),sockfd)+1;
+	// 	Select(maxfdp1,&rset,NULL,NULL,NULL);
+	// 	if(FD_ISSET(sockfd,&rset)){
+	// 		if(Readline(sockfd,recvline,MAXLINE) == 0){
+	// 			error_quit("str_cli: server terminated prematurely");		
+	// 		}
+	// 		Fputs(recvline,stdout);// print connect infomation
+	// 	}
+	// 	print("whatBUG!");
+	// 	if(FD_ISSET(fileno(fp),&rset)){	//wait for input
+	// 		if(FD_ISSET(fileno(fp),&rset)){
+	// 			return;
+	// 		}
+	// 		Writen(sockfd,sendline,strlen(sendline));
+	// 	}
+	// }
+	
+	while(fgets(sendline,MAXLINE,fp)!=NULL){
+		printf("aaaaa\n%s",sendline);
+		Writen(sockfd,sendline,strlen(sendline));
+		if(Readline(sockfd,recvline,MAXLINE)==0)
+			error_quit("server termnated prematurely");
+		Fputs(recvline, stdout);
 	}
 }
 int main(int argc, char** argv){
