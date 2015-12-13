@@ -99,7 +99,7 @@ int ConnectToServer(char* hostname, unsigned short port)
 	// Get the server’s address.
 	addr.sin_family = info->h_addrtype;
 	addr.sin_port = htons(port);
-	memcpy((void*) &addr.sin_addr, info->h_addr, info->h_length);
+	memcpy((void*) &addr.sin_addr, info->h_addr_list, info->h_length);
 	// Create a socket.
 	fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (fd == -1)
