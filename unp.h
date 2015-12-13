@@ -1,4 +1,4 @@
-// COPYRIGHT @ AAA20090987 CSDN
+// COPYRIGHT @ AAA20090987 CSDN_USER
 #ifndef MY_UNP_H_  
 #define MY_UNP_H_  
 
@@ -38,7 +38,7 @@ typedef void Sigfunc(int);
 #define max(a,b)    ((a) > (b) ? (a) : (b))  
 
 
-//错误处理函数，输出错误信息后退出程序  
+//错误处理函数，输出错误信息后退出程序  LISTENQ
 void error_quit(char *fmt, ...);  
 
 //为了适应网络的慢速IO而编写的读写函数
