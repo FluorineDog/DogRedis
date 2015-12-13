@@ -12,7 +12,8 @@ int SetUp(unsigned short port){
 	return listenfd;
 }
 int exec(char* output_buf, char*  input_buf){
-	snprintf(output_buf,MAXLINE,"%s", input_buf);
+	int n = snprintf(output_buf,MAXLINE,"%s", input_buf);
+	output_buf[n] = '\0';
 	return -1;
 }
 int main(int argc,char *argv[]){
@@ -70,6 +71,7 @@ int main(int argc,char *argv[]){
 			
 			if(FD_ISSET(sockfd, &rset)){
 				int nStr = Read(sockfd, input_buf, MAXLINE);
+				input_buf[nStr]='\0';
 				if(nStr == 0){			// connection closed by client
 					Close(sockfd);
 					FD_CLR(sockfd, &allset);
@@ -77,7 +79,7 @@ int main(int argc,char *argv[]){
 				}
 				else{
 					exec(output_buf, input_buf);
-					fprintf(stderr,"%s",output_buf);
+					fprintf(stdout,"%s",input_buf,output_buf);
 					Write(sockfd, output_buf,MAXLINE);
 				}
 				if(--nready<=0){

@@ -18,7 +18,7 @@ int ConnectToServer(char* hostname, unsigned short port)
 	struct sockaddr_in addr;
 	// Get the server’s details.
 	
-	if(hostname){
+	if( hostname ){
 		info = gethostbyname(hostname);
 	}
 	else{
