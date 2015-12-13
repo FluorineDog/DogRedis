@@ -43,6 +43,7 @@ int ConnectToServer(char* hostname, unsigned short port)
 		close(fd);
 		error_quit("Could not connect to server.");
 	}
+	fprintf(stderr, "44xxx444444\n");
 	return fd;
 }
 #endif //DOG_LAZY_TCP_H_
