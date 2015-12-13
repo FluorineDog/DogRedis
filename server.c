@@ -12,6 +12,8 @@ int SetUp(unsigned short port){
 
 int main(int argc,char *argv[]){
 	int listenfd, connfd, maxfd;
+	char input_buf[MAXLINE];
+	char output_buf[MAXLINE];
 	unsigned short port;
 	fd_set rset, allset;
 	int client[FD_SETSIZE];
@@ -62,7 +64,18 @@ int main(int argc,char *argv[]){
 		for(int i = 0; i< maxi; ++i){
 			int sockfd = client[i];
 			if(sockfd<0)continue;
-			if(FD_ISSET(sockfd, &rset))
+			if(FD_ISSET(sockfd, &rset)){
+				int nStr = Read(sockfd, input_buf, MAXLINE);
+				if(nstr == 0){			// connection closed by client
+					Close(sockfd);
+					FD_CLR(sockfd, &allset);
+					client[i] = -1;
+				}
+				else{
+					exec(output_buf, input_buf);
+					fprintf
+				}
+			}
 		}
 		
 	}

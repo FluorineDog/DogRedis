@@ -22,8 +22,8 @@
 #include <sys/file.h>  
 #include <sys/mman.h>
 
-#define MAXLINE 1024  
-#define LISTENQ 1024  
+#define MAXLINE 0x1000  
+#define LISTENQ 0x400  
 
 #define	MAXNITEMS 1000000
 #define	MAXNTHREADS 100
@@ -41,7 +41,7 @@ typedef void Sigfunc(int);
 //错误处理函数，输出错误信息后退出程序  LISTENQ
 void error_quit(char *fmt, ...);  
 
-//为了适应网络的慢速IO而编写的读写函数
+//为了适应网络的慢速IO而编写的读写函数 
 ssize_t readn(int fd, void *vptr, size_t n);  
 ssize_t writen(int fd, const void *vptr, size_t n);  
 ssize_t readline(int fd, void *vptr, size_t maxlen);  
