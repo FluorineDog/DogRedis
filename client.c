@@ -3,32 +3,43 @@
 #include "unp.h"
 #include "lazy_tcp.h"
 void str_cli(FILE *fp, int sockfd){
-	char	sendline[MAXLINE], recvline[MAXLINE];//serve as buf
-	int 	maxfdp1;
+	char	buf[MAXLINE];
+	int 	maxfdp1, stdineof = 0;
 	fd_set 	rset;
+	int n;
 	FD_ZERO(&rset);
 	for(;;){
-		FD_SET(fileno(fp),&rset);
+		if(stdineof == 0)
+			FD_SET(fileno(fp),&rset);
 		FD_SET(sockfd, &rset);
 		maxfdp1=max(fileno(fp),sockfd)+1;
 		Select(maxfdp1,&rset,NULL,NULL,NULL);
-		fprintf(stdout,"*");
+		//fprintf(stdout,">");
 		if(FD_ISSET(sockfd,&rset)){
-			if(Readline(sockfd,recvline,MAXLINE) == 0){
-				error_quit("str_cli: server terminated prematurely");		
+			int n = Read(sockfd,buf,MAXLINE);
+			if(n == 0){
+				if(stdineof == 1)
+					return;
+				else
+					error_quit("str_cli: server terminated prematurely");		
 			}
-			fprintf(stdout,"\n<%s>\n",recvline);
+			buf[n] =  '\0';
+			fprintf(stderr,"%s",buf);
 			//Fputs(recvline,stdout);// print connect infomation
 		}
-		fprintf(stdout,"whatBUG!!!!\n");
+		//fprintf(stdout,"whatBUG!!!!\n");
 		if(FD_ISSET(fileno(fp),&rset)){	//wait for input
-			if(Fgets(sendline,MAXLINE,fp)==NULL){
-				return;
+			int n = Read(fileno(fp),buf,MAXLINE);
+			if(n == 0){
+				Shutdown(sockfd, SHUT_WR);
+				FD_CLR(fileno(fp),&rset);
+				continue;
 			}
-			Writen(sockfd,sendline,strlen(sendline));
+			buf[n] =  '\0';
+			Writen(sockfd,buf,n);
 		}
 	}
-
+	
 }
 int main(int argc, char** argv){
 

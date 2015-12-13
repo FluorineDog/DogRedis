@@ -11,10 +11,11 @@ int SetUp(unsigned short port){
 	fprintf(stderr,"set up server. Port %d",(int)port);
 	return listenfd;
 }
-int exec(char* output_buf, char*  input_buf){
+int exec(char* output_buf, char*  input_bufyep){
 	int n = snprintf(output_buf,MAXLINE,"%s", input_buf);
+	//output_buf[0] = 'A'+n;
 	output_buf[n] = '\0';
-	return -1;
+	return n;
 }
 int main(int argc,char *argv[]){
 	char input_buf[MAXLINE];
@@ -78,9 +79,9 @@ int main(int argc,char *argv[]){
 					client[i] = -1;
 				}
 				else{
-					exec(output_buf, input_buf);
+					int n = exec(output_buf, input_buf);
 					fprintf(stdout,"%s",input_buf,output_buf);
-					Write(sockfd, output_buf,MAXLINE);
+					Write(sockfd, output_buf, n);
 				}
 				if(--nready<=0){
 					break;
