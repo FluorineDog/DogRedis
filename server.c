@@ -11,7 +11,7 @@ int SetUp(unsigned short port){
 	printf("set up server. Port %d",(int)port);
 	return listenfd;
 }
-int exec(char* input_buf, char*  output_buf){
+int exec(char* output_buf, char*  input_buf){
 	snprintf(output_buf,MAXLINE,"%s", input_buf);
 	return -1;
 }

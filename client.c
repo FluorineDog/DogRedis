@@ -26,7 +26,7 @@ void str_cli(FILE *fp, int sockfd){
 		}
 		fprintf(stderr,"whatBUG!");
 		if(FD_ISSET(fileno(fp),&rset)){	//wait for input
-			if(FD_ISSET(fileno(fp),&rset)==NULL){
+			if(Fgets(sendline,MAXLINE,fp)==0){
 				return;
 			}
 			Writen(sockfd,sendline,strlen(sendline));
