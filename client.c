@@ -12,12 +12,12 @@ void str_cli(FILE *fp, int sockfd){
 	FD_ZERO(&rset);
 	for(;;){
 		fprintf(stderr,"2222\n");
-		//FD_SET(fileno(fp),&rset);
+		FD_SET(fileno(fp),&rset);
 		FD_SET(sockfd, &rset);
 		maxfdp1=max(fileno(fp),sockfd)+1;
-		//fprintf(stderr,"33333333\n");
+		fprintf(stderr,"33333333\n");
 		Select(maxfdp1,&rset,NULL,NULL,NULL);
-		//fprintf(stderr,"444444444444\\n");
+		fprintf(stderr,"444444444444\\n");
 		if(FD_ISSET(sockfd,&rset)){
 			if(Readline(sockfd,recvline,MAXLINE) == 0){
 				error_quit("str_cli: server terminated prematurely");		
@@ -26,7 +26,7 @@ void str_cli(FILE *fp, int sockfd){
 		}
 		fprintf(stderr,"whatBUG!");
 		if(FD_ISSET(fileno(fp),&rset)){	//wait for input
-			if(Fgets(sendline,MAXLINE,fp)==0){
+			if(Fgets(sendline,MAXLINE,fp)==NULL){
 				return;
 			}
 			Writen(sockfd,sendline,strlen(sendline));

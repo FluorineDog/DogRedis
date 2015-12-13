@@ -8,7 +8,7 @@ int SetUp(unsigned short port){
 	servaddr.sin_port = htons(port);
 	Bind(listenfd, (SA*)&servaddr, sizeof(servaddr));
 	Listen(listenfd,LISTENQ);
-	printf("set up server. Port %d",(int)port);
+	fprintf(stderr,"set up server. Port %d",(int)port);
 	return listenfd;
 }
 int exec(char* output_buf, char*  input_buf){
@@ -83,7 +83,7 @@ int main(int argc,char *argv[]){
 				}
 				else{
 					exec(output_buf, input_buf);
-					fprintf(stderr,"%s",output_buf);
+					fprintf(stderr,"biubiubiu%s",input_buf);
 				}
 				if(--nready<=0){
 					break;
