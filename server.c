@@ -2,19 +2,19 @@
 int SetUp(unsigned short port){
 	int listenfd = Socket(AF_INET, SOCK_STREAM, 0);
 	struct sockaddr_in servaddr;
-	memset(&servaddr, sizeof(servaddr));
+	memset(&servaddr,0, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
 	servaddr.sin_port = htons(port);
 	Bind(listenfd, (SA*)&servaddr, sizeof(servaddr));
 	Listen(listenfd,LISTENQ);
+	return listenfd;
 }
 int exec(char* input_buf, char*  output_buf){
 	snprintf(output_buf,MAXLINE,"%s", input_buf);
 	return -1;
 }
 int main(int argc,char *argv[]){
-	int listenfd, connfd, maxfd;
 	char input_buf[MAXLINE];
 	char output_buf[MAXLINE];
 	unsigned short port;
@@ -28,7 +28,7 @@ int main(int argc,char *argv[]){
 	//set up listenfd
 	int listenfd = SetUp(port);
 	// initialize
-	maxfd = listenfd;
+	int maxfd = listenfd;
 	int maxi = -1;
 	for(int i=0; i < FD_SETSIZE; ++i){
 		client[i]= -1;
@@ -43,7 +43,7 @@ int main(int argc,char *argv[]){
 		if(FD_ISSET(listenfd, &rset)){	// new client connection
 			struct sockaddr_in cliaddr;
 			socklen_t clilen = sizeof(cliaddr);
-			connfd = Accept(listenfd, (SA*)cliaddr, &clilen);
+			int connfd = Accept(listenfd, (SA*)&cliaddr, &clilen);
 			int i=0;
 			for(; i<FD_SETSIZE;++i){
 				if(client[i] < 0){		// find empty slot for new client
@@ -69,14 +69,14 @@ int main(int argc,char *argv[]){
 			if(sockfd < 0)continue;
 			if(FD_ISSET(sockfd, &rset)){
 				int nStr = Read(sockfd, input_buf, MAXLINE);
-				if(nstr == 0){			// connection closed by client
+				if(nStr == 0){			// connection closed by client
 					Close(sockfd);
 					FD_CLR(sockfd, &allset);
 					client[i] = -1;
 				}
 				else{
-					status = exec(output_buf, input_buf);
-					if(fprintf(output_buf));
+					exec(output_buf, input_buf);
+					fprintf(stdout,"%s",output_buf);
 				}
 				if(--nready<=0){
 					break;
