@@ -53,8 +53,8 @@ DOG_CMD_FUNC_DEF(bitcount) {
 		return 0;
 	int end = argc >= 4 ? atoi(argv[3]) : -1;
 	int beg = argc >= 3 ? atoi(argv[2]) : 0;
-	end = index(string, end);
-	beg = index(string, beg);
+	end = string_index(string, end);
+	beg = string_index(string, beg);
 	++end;
 	int count = 0;
 	for (int i = beg; i < end; ++i) {
@@ -82,8 +82,8 @@ DOG_CMD_FUNC_DEF(getrange) {
 		return NIL;
 	int end = argc >= 4 ? atoi(argv[3]) : -1;
 	int beg = argc >= 3 ? atoi(argv[2]) : 0;
-	end = index(string, end);
-	beg = index(string, beg);
+	end = string_index(string, end);
+	beg = string_index(string, beg);
 	++end;
 	snprintf(output_buf, end - beg + 1, "%s", string->str + beg);
 	return NIL;

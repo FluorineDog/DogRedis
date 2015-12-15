@@ -36,7 +36,7 @@ void string_set_bit(String_t* s, int offset, bool bit) {
 		s->str[n] &= ~(1 << (offset % 8));
 	}
 }
-int index(String_t* s, int i) {
+int string_index(String_t* s, int i) {
 	if (i < 0)
 		i += s->size;
 	if (i < 0)

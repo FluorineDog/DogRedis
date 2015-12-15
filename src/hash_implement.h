@@ -1,4 +1,6 @@
-#pragma once
+#ifndef DOG_HASH_IMPLEMENT_H_
+#define DOG_HASH_IMPLEMENT_H_
+#include <stdbool.h>
 #define _CRT_SECURE_NO_WARNINGS
 unsigned long long hash_function_sub(char*  str);
 unsigned int hash_function_main(char * str);
@@ -31,3 +33,4 @@ char* get_new_str(char* str);
 Hash_item_t* hash_table_visit_next(Hash_table_t* table, Hash_item_t* iter, bool(*cmp)());
 int hash_table_visit_by_cursor(Hash_table_t * table, int cursor, int count, bool(*action)(char*));
 
+#endif // DOG_HASH_IMPLEMENT_H_

@@ -3,9 +3,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdlib.h>
 #include <stdio.h>
-#include <iostream>
 #include <stdbool.h>
-#include <regex>
 #include "string_implement.h"
 #include "hash_implement.h" 
 #define DOG_CMD_FUNC_DEF(CMD_NAME) \
