@@ -1,4 +1,4 @@
-#define DOG_EXEC_CPP_
+//#define DOG_EXEC_CPP_
 #ifdef DOG_EXEC_CPP_
 #include <iostream>
 #include <algorithm>

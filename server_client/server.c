@@ -1,4 +1,5 @@
 #include "unp.h"
+#include "../cmd/exec_func.h"
 int SetUp(unsigned short port){
 	int listenfd = Socket(AF_INET, SOCK_STREAM, 0);
 	struct sockaddr_in servaddr;
@@ -11,12 +12,7 @@ int SetUp(unsigned short port){
 	fprintf(stderr,"set up server. Port %d",(int)port);
 	return listenfd;
 }
-int exec(char* output_buf, char*  input_bufyep){
-	int n = snprintf(output_buf,MAXLINE,"%s", input_buf);
-	//output_buf[0] = 'A'+n;
-	output_buf[n] = '\0';
-	return n;
-}
+
 int main(int argc,char *argv[]){
 	char input_buf[MAXLINE];
 	char output_buf[MAXLINE];
