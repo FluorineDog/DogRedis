@@ -1,0 +1,1 @@
+hdel hlen hexists hmget hget hmset hgetall hincrby hset hincrbyfloat hsetnx hkeys hvals

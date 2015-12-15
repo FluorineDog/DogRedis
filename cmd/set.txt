@@ -1,0 +1,1 @@
+sadd smove scard spop sdiff srandmember srem sinter sscan sunion sismember smembers

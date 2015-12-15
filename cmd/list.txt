@@ -1,0 +1,1 @@
+blpop lrange brpop lrem brpoplpush lset lindex ltrim linsert rpop llen rpoplpush lpop rpush lpush rpushx lpushx

@@ -1,0 +1,2 @@
+append getbit setbit mget bitcount setrange getrange 
+incr decr incrby decrby msetnx get set strlen
